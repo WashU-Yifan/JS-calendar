@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    
+    <title>Calculator</title>
+    <!---Source:https://github.com/mdn/learning-area/blob/main/javascript/introduction-to-js-1/what-is-js/javascript-label.html
+        
+        reference begin:-->
+    <style>
+        p {
+          font-family: 'helvetica neue', helvetica, sans-serif;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+          text-align: center;
+          border: 2px solid rgba(0,0,200,0.6);
+          background: rgba(0,0,200,0.3);
+          color: rgba(0,0,200,0.6);
+          box-shadow: 1px 1px 2px rgba(0,0,200,0.4);
+          border-radius: 10px;
+          padding: 3px 10px;
+          display: inline-block;
+          cursor: pointer;
+        }
+      </style>
+    <!--reference end-->
+    </head>
+<body>
+    <input type="text" id="value1" placeholder="value1" />
+
+
+    <input type="text" id="value2" placeholder="value2"/>
+    <p> +<input name="symbol" type="radio"  value="plus" />
+        -<input name="symbol" type="radio"  value="minus" />
+        *<input name="symbol" type="radio"  value="mult" />
+        /<input name="symbol" type="radio"  value="divide"  /></p>
+    <p id="result"></p>
+</body>
+
+</html>
+
+<script>
+    
+    function compute(){
+        let symbol_arr=document.getElementsByName("symbol");
+        let value1=document.getElementById("value1").value;
+        let value2=document.getElementById("value2").value;
+        if(value1==""||value2=="")
+            return;
+        
+        
+        let symbol=null;
+        for( let i=0;i<symbol_arr.length;++i){
+            if(symbol_arr[i].checked){
+                symbol=symbol_arr[i].value;
+                break;
+            }
+
+        }
+
+
+        let res=0;
+        switch(symbol){
+            case "plus":
+                res=parseFloat(value1)+parseFloat(value2);
+                break;
+            case "minus":
+                res=value1-value2;
+                break;                
+            case "mult":
+                res=value1*value2;
+                break;             
+            case "divide":
+                if(value2==0) {
+                    alert("denomiator can't be zero"); 
+                    return 0;
+                }
+                res=value1/value2;
+                break;
+                                   
+        }                    
+        document.getElementById("result").textContent=res;
+       
+    }
+    
+    document.getElementById("value1").addEventListener("change",compute,false);
+    document.getElementById("value2").addEventListener("change",compute,false);
+    let symbol_arr=document.getElementsByName("symbol");
+    for( let i=0;i<symbol_arr.length;++i){
+        symbol_arr[i].addEventListener("click", compute, false);
+    }
+    
+   
+
+</script>
