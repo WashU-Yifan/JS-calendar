@@ -27,15 +27,13 @@
     <!--reference end-->
     </head>
 <body>
-    <input type="text" id="value1" placeholder="value1" />
-
-
+    <input type="text" id="value1" placeholder="value1"/>
     <input type="text" id="value2" placeholder="value2"/>
     <p> +<input name="symbol" type="radio"  value="plus" />
         -<input name="symbol" type="radio"  value="minus" />
         *<input name="symbol" type="radio"  value="mult" />
         /<input name="symbol" type="radio"  value="divide"  /></p>
-    <p id="result"></p>
+    <p id="result">result</p>
 </body>
 
 </html>
@@ -46,10 +44,14 @@
         let symbol_arr=document.getElementsByName("symbol");
         let value1=document.getElementById("value1").value;
         let value2=document.getElementById("value2").value;
-        if(value1==""||value2=="")
-            return;
-        
-        
+        if(!value1||!value2) return 0; // when only one input is provided
+        value1=parseFloat(value1);
+        value2=parseFloat(value2);
+
+        if(isNaN(value1)||isNaN(value2)){
+            alert("input must be number!");
+            return 0;
+        }
         let symbol=null;
         for( let i=0;i<symbol_arr.length;++i){
             if(symbol_arr[i].checked){
@@ -78,9 +80,11 @@
                 }
                 res=value1/value2;
                 break;
+            default:
+                return 0;
                                    
         }                    
-        document.getElementById("result").textContent=res;
+        document.getElementById("result").innerHTML=res;
        
     }
     
