@@ -14,6 +14,7 @@ $date=$json_obj['date'];
 $time=$json_obj['time'];
 $title=$mysqli->real_escape_string((string)htmlentities($json_obj['title']));
 $descripton=$mysqli->real_escape_string((string)($json_obj['description']));
+$share_user=$mysqli->real_escape_string((string)($json_obj['share_user']));
 $token=$json_obj['token'];
 
 if(!hash_equals($_SESSION['token'],$token)){
@@ -71,6 +72,37 @@ else{
         exit;
     }
     $stmt->bind_param('dssss',$userid, $title, $descripton,$time,$date);
+    if($share_user){
+        //we want to share this event to another user
+        //first we have to fetch the userid based on the user name provided.
+        $stmt = $mysqli->prepare("SELECT userid FROM users WHERE username=?"); 
+        if(!$stmt){
+            echo json_encode(array(
+                "success" => false,
+                "message" => "sql prep failed"
+            ));
+            exit;
+        }
+        $stmt->bind_param('s', $username);
+        $stmt->execute();
+        $stmt->bind_result($share_id);
+        $stmt->fetch();
+        $stmt->close();
+        if($share_id){
+            $stmt = $mysqli->prepare("INSERT INTO events ( userid,event_title,event_descript,event_time,event_date) VALUES (?,?,?,?,?)");
+            if(!$stmt){
+                echo json_encode(array(
+                    "success" => false,
+                    "message" => "sql prep failed"
+                ));
+                exit;
+            }
+            $stmt->bind_param('dssss',$userid, $title, $descripton,$time,$date);
+            $stmt->execute();
+            $stmt->close();
+        }
+    }
+    
     $stmt->execute();
     $stmt->close();
 }

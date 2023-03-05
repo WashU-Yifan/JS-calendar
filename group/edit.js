@@ -23,9 +23,11 @@ function insert(event) {
     const date = document.getElementById("event_date").value; 
     const title = document.getElementById("event_title").value; 
     const description= document.getElementById("event_descript").value;
+    const share_user= document.getElementById("share_user").value;
     const token= document.getElementById("token").value;   
     // Make a URL-encoded string for passing POST data:
-    const data = { 'time':time,'date': date, 'title': title, 'description':description, 'token': token};
+    const data = { 'time':time,'date': date, 'title': title, 'description':description, 'token': token,
+    'share_user':share_user};
 
     fetch("edit_event.php", {
             method: 'POST',

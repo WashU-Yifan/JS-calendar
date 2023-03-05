@@ -42,8 +42,9 @@
         title<br><input type="text" id="event_title"  /><br>
         event<br><textarea id="event_descript" rows="15" cols="60"></textarea><br>
         date <input type="date" id ="event_date"/><input type="time" id="event_time"  /><br>
+        <input type="text" placeholder="share with someone" id="share_user" />
         <button id="insert_event">insert</button>
-
+        
         <p>Select a date to remove an event.</p>
         <input type="date" id ="del_event_date"/>
         <input type="time" id="del_event_time"/><br>
