@@ -72,6 +72,8 @@ else{
         exit;
     }
     $stmt->bind_param('dssss',$userid, $title, $descripton,$time,$date);
+    $stmt->execute();
+    $stmt->close();
     if($share_user){
         //we want to share this event to another user
         //first we have to fetch the userid based on the user name provided.
@@ -88,6 +90,12 @@ else{
         $stmt->bind_result($share_id);
         $stmt->fetch();
         $stmt->close();
+        echo json_encode(array(
+            "success" => false,
+            "user" => $share_user,
+            "id"=>$share_id
+        ));
+        exit;
         if($share_id){
             $stmt = $mysqli->prepare("INSERT INTO events ( userid,event_title,event_descript,event_time,event_date) VALUES (?,?,?,?,?)");
             if(!$stmt){
@@ -97,14 +105,13 @@ else{
                 ));
                 exit;
             }
-            $stmt->bind_param('dssss',$shareid, $title, $descripton,$time,$date);
+            $stmt->bind_param('dssss',$share_id, $title, $descripton,$time,$date);
             $stmt->execute();
             $stmt->close();
         }
     }
     
-    $stmt->execute();
-    $stmt->close();
+    
 }
 echo json_encode(array(
     "success" => true
