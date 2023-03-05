@@ -97,7 +97,7 @@ else{
                 ));
                 exit;
             }
-            $stmt->bind_param('dssss',$shareid, $title, $descripton,$time,$date);
+            $stmt->bind_param('dssss',$share_id, $title, $descripton,$time,$date);
             $stmt->execute();
             $stmt->close();
         }
