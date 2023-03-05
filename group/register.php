@@ -1,7 +1,9 @@
 <?php
+ini_set("session.cookie_httponly", 1);
+header("Content-Type: application/json");
 require 'database.php';
 session_start();
-header("Content-Type: application/json"); // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
+ // Since we are sending a JSON response here (not an HTML document), set the MIME Type to application/json
 
 //Because you are posting the data via fetch(), php has to retrieve it elsewhere.
 $json_str = file_get_contents('php://input');
@@ -46,6 +48,8 @@ if($pwd1!=$pwd2){
 	));
 	exit;
 }
+
+$username = $mysqli->real_escape_string($username);
 $stmt->bind_param('s', $username);
 $stmt->execute();
 
@@ -56,7 +60,7 @@ $stmt->close();
 // Compare the submitted password to the actual password hash
 
 if( $cnt<1 ){
-	$password_hash= password_hash($_POST['password'], PASSWORD_BCRYPT);
+	$password_hash= password_hash($pwd1, PASSWORD_BCRYPT);
    
     $stmt = $mysqli->prepare("INSERT INTO users (username, hashed_password) VALUES (?, ?)");
     if(!$stmt){

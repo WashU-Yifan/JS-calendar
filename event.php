@@ -9,48 +9,25 @@ $json_str = file_get_contents('php://input');
 $json_obj = json_decode($json_str, true);
 
 //Variables can be accessed as such:
-$username = $mysqli->real_escape_string((string)$json_obj['username']);
-$pwd1 =  $json_obj['password'];
-$pwd2 =  $json_obj['password2'];
-$token=$json_obj['token'];
-//This is equivalent to what you previously did with $_POST['username'] and $_POST['password']
-
-// Check to see if the username and password are valid.  (You learned how to do this in Module 3.)
-
-//detect CSRF attack
-if(!hash_equals($_SESSION['token'],$token)){
+$date=$json_obj['date'];
+if(!$_SESSION['userid']){
     echo json_encode(array(
 		"success" => false,
-		"message" => "CRSF detected"
+		"message" => "not logged in"
 	));
 	exit;
 }
+$userid=$_SESSION['userid'];
+
 // Use a prepared statement
-$stmt = $mysqli->prepare("SELECT COUNT(*)FROM users WHERE username=?");
+$stmt = $mysqli->prepare("SELECT event_title, event_descript 
+FROM events WHERE time=? and userid=?");
 
-
-//check for SQL injection& filter input
-
-if( !preg_match('/^[\w_\-]+$/', $username) ){
-    echo json_encode(array(
-		"success" => false,
-		"message" => "Invalid username"
-	));
-	exit;
-
-}
-if($pwd1!=$pwd2){
-    echo json_encode(array(
-		"success" => false,
-		"message" => "password does not match"
-	));
-	exit;
-}
-$stmt->bind_param('s', $username);
+$stmt->bind_param('sd', $date,$userid);
 $stmt->execute();
 
 // Bind the results
-$stmt->bind_result($cnt);
+$stmt->bind_result($title, $descript);
 $stmt->fetch();
 $stmt->close();
 // Compare the submitted password to the actual password hash

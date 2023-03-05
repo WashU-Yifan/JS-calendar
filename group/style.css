@@ -1,0 +1,67 @@
+body{
+    padding: 20px;
+    background: #f1f1f1;
+    
+}
+
+h1{
+    color: rgb(29, 30, 114);
+    text-align: center;
+    font-size: 50px;
+    text-shadow: 2px 2px;
+    font-family: 'Times New Roman', Times, serif;
+}
+/*begin of citation
+source: https://www.w3docs.com/learn-html/html-form-templates.html
+*/
+button {
+    background-color: #8ebf42;
+    color: white;
+    padding: 14px 0;
+    margin: 10px 0;
+    border: none;
+    cursor: grabbing;
+    width: 20%;
+    }
+/* end of citation
+*/
+
+h2{
+    color: rgb(6, 6, 31);
+    text-align: center;
+    font-size: 40px;
+
+    font-family: 'Times New Roman', Times, serif;
+}
+
+h3{
+    color: rgb(6, 6, 31);
+    
+    font-size: 35px;
+
+    font-family: 'Times New Roman', Times, serif;
+}
+table, th, td{
+  width: 100%;
+  
+  table-layout: fixed;
+  
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+th{
+    text-align: center;
+    height: 150px;
+}
+td{
+    height:200px;
+    vertical-align: top;
+}
+p{
+    
+   
+    color: rgb(0, 2, 9);
+    
+    font-family: 'Times New Roman', Times, serif;
+
+}
