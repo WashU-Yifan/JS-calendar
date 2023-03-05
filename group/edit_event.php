@@ -83,7 +83,7 @@ else{
             ));
             exit;
         }
-        $stmt->bind_param('s', $username);
+        $stmt->bind_param('s', $share_user);
         $stmt->execute();
         $stmt->bind_result($share_id);
         $stmt->fetch();
@@ -97,7 +97,7 @@ else{
                 ));
                 exit;
             }
-            $stmt->bind_param('dssss',$userid, $title, $descripton,$time,$date);
+            $stmt->bind_param('dssss',$shareid, $title, $descripton,$time,$date);
             $stmt->execute();
             $stmt->close();
         }
